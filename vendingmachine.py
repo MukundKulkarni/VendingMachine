@@ -38,13 +38,24 @@ class VendingMachine():
 
         self.coins_available.append(Coins())"""
 
-    def insert_coin():
-        pass
+    @classmethod
+    def insert_coin(cls, selected):
+        cost = cls.products_available[selected - 1].price
+        print("Please Insert at aleast % d Rupees" % (cost))
+        amount_inserted = int(input(">>> "))
+        if amount_inserted < cost:
+            print("Please insert % d more." % (cost - amount_inserted))
+        elif amount_inserted == cost:
+            print("Enjoy your % s" % (cls.products_available[selected-1].name))
+        else:
+            print("Pleas Collect your % dRupees of change." % (amount_inserted - cost))
+            print("Enjoy your % s" % (cls.products_available[selected-1].name))
+
 
     @classmethod
     def select_product(cls, selected):
-        if selected.isnumeric() and int(selected) <= len(cls.products_available):
-            cls.insert_coin()
+        if selected <= len(cls.products_available) and selected >= 1:
+            cls.insert_coin(selected)
         else:
             print("Please Select from Available Products!")
 
@@ -53,7 +64,7 @@ class VendingMachine():
     def a_transaction(cls):
         print("Welcome, Please select a product.\n")
         cls.show_products_available()
-        selected = input(">>> ")
+        selected = int(input(">>> "))
         cls.select_product(selected)
 
 
