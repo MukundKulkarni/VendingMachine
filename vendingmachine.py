@@ -47,9 +47,14 @@ class VendingMachine():
             print("Please insert % d more." % (cost - amount_inserted))
         elif amount_inserted == cost:
             print("Enjoy your % s" % (cls.products_available[selected-1].name))
+            cls.update_product_count(selected)
+            cls.update_coin_count(amount_inserted)
         else:
-            print("Pleas Collect your % dRupees of change." % (amount_inserted - cost))
+            change = amount_inserted - cost
+            print("Pleas Collect your % d Rupees of change." % (change))
             print("Enjoy your % s" % (cls.products_available[selected-1].name))
+            cls.update_product_count(selected)
+            cls.update_coin_count(amount_inserted, change)
 
 
     @classmethod
@@ -67,7 +72,21 @@ class VendingMachine():
         selected = int(input(">>> "))
         cls.select_product(selected)
 
+    @classmethod
+    def update_product_count(cls, selected):
+        cls.products_available[selected-1].quantity -= 1
 
+
+    @classmethod
+    def update_coin_count(cls, amount_inserted, change = 0):
+        idx = { 1 : 0,
+                2 : 1,
+                5 : 2,
+                10 : 3,
+            }
+
+        if change == 0:
+            cls.coins_available[idx[amount_inserted]].quantity += 1
 
 
 if __name__ == "__main__":
@@ -77,3 +96,5 @@ if __name__ == "__main__":
     #VendingMachine.add_product()
 
     VendingMachine.a_transaction()
+
+    VendingMachine.show_products_available()
