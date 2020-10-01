@@ -27,8 +27,8 @@ class VendingMachine():
     @classmethod
     def add_product(cls):
         name = input("Enter Name of Product :")
-        price = int(input("Enter Price of Product :"))
-        quantity = int(input("Enter Qunatity of Produc :"))
+        price = int(input("Write the intial project price :"))
+        quantity = int(input("Enter the number of product (Quantities) :"))
         cls.products_available.append(Product(name, price, quantity))
 
     """
@@ -41,17 +41,19 @@ class VendingMachine():
     @classmethod
     def insert_coin(cls, selected):
         cost = cls.products_available[selected - 1].price
-        print("Please Insert at aleast % d Rupees" % (cost))
+        print("Enter the at aleast % d Rupees" % (cost))
         amount_inserted = int(input(">>> "))
         if amount_inserted < cost:
-            print("Please insert % d more." % (cost - amount_inserted))
+            print("Please Enter % d more : " % (cost - amount_inserted))
         elif amount_inserted == cost:
-            print("Enjoy your % s" % (cls.products_available[selected-1].name))
+            #Greetings and display Rupees.
+            print("have a Good day & Enjoy your % s" % (cls.products_available[selected-1].name))
             cls.update_product_count(selected)
             cls.update_coin_count(amount_inserted)
         else:
             change = amount_inserted - cost
-            print("Pleas Collect your % d Rupees of change." % (change))
+            print("Collect here your % d Rupees of change." % (change))
+            #it will show the change.
             print("Enjoy your % s" % (cls.products_available[selected-1].name))
             cls.update_product_count(selected)
             cls.update_coin_count(amount_inserted, change)
@@ -62,12 +64,13 @@ class VendingMachine():
         if selected <= len(cls.products_available) and selected >= 1:
             cls.insert_coin(selected)
         else:
-            print("Please Select from Available Products!")
+            print("Select anything from Available Products! : ")
 
 
     @classmethod
     def a_transaction(cls):
-        print("Welcome, Please select a product.\n")
+        print("Welcome back!, Please choose or select the product.\n")
+        #wait for user till he select the product.
         cls.show_products_available()
         selected = int(input(">>> "))
         cls.select_product(selected)
